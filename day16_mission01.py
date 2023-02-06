@@ -35,25 +35,39 @@ def peek() :
 	return stack[top]
 
 ## 전역 변수 선언 부분 ##
-SIZE = 10
+SIZE = 100
 stack = [ None for _ in range(SIZE) ]
 top = -1
 
 ## 메인 코드 부분 ##
 if __name__ == "__main__" :
 
-	stoneAry = ["주황", "초록", "파랑", "보라", "빨강", "노랑"]
 
-	print("과자집에 가는길 : ", end = ' ')
-	for stone in stoneAry :
-		push(stone)
-		print(stone, "-->", end = ' ')
-	print("과자집")
+	with open("진달래꽃.txt", 'r', encoding='UTF8') as rfp :
+		line_array = rfp.readlines()
 
-	print("우리집에 오는길 : ", end = ' ')
+	print("----- 원본 -----")
+	for line in line_array :
+		push(line)
+		print(line, end = ' ')
+	print()
+
+	print("----- 거꾸로 처리된 결과 -----")
 	while True :
-		stone = pop()
-		if stone == None :
+		line = pop()
+		if line == None :
 			break
-		print(stone, "-->", end = ' ')
-	print("우리집")
+
+		txt_stack = [None for _ in range(len(line))]
+		txt_top = -1
+
+		for ch in line :
+			txt_top += 1
+			txt_stack[txt_top] = ch
+
+		while True :
+			if txt_top == -1 :
+				break
+			ch = txt_stack[txt_top]
+			txt_top -= 1
+			print(ch, end = ' ')
