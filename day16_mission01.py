@@ -1,50 +1,59 @@
-# 문제 2
-class Node() :
-    def __init__ (self) :
-        self.data = None
-        self.nlink = None
-        self.plink = None
+def isStackFull() :
+	global SIZE, stack, top
+	if (top >= SIZE-1) :
+		return True
+	else :
+		return False
 
-def printNodes(start):
-    current = start
-    if current.nlink == None : #None 값이 있다면 선형 리스트에서는 정지를 해야되니까
-        return
-    print("정방향 ")
-    print(current.data, end=' ')
-    while current.nlink != None:
-        current = current.nlink
-        print(current.data, end=' ')
-    print()
+def isStackEmpty() :
+	global SIZE, stack, top
+	if (top == -1) :
+		return True
+	else :
+		return False
 
-    print("역방향 ")
-    print(current.data, end=' ')
+def push(data) :
+	global SIZE, stack, top
+	if (isStackFull()) :
+		return
+	top += 1
+	stack[top] = data
 
-    while current.plink != None:
-        current = current.plink
-        print(current.data, end=' ')
-    print()
+def pop() :
+	global SIZE, stack, top
+	if (isStackEmpty()) :
+		return None
+	data = stack[top]
+	stack[top] = None
+	top -= 1
+	return data
 
-
+def peek() :
+	global SIZE, stack, top
+	if (isStackEmpty()) :
+		return None
+	return stack[top]
 
 ## 전역 변수 선언 부분 ##
-memory = []
-head, current, pre = None, None, None
-dataArray = ["다현", "정연", "쯔위", "사나", "지효"]
+SIZE = 10
+stack = [ None for _ in range(SIZE) ]
+top = -1
 
 ## 메인 코드 부분 ##
 if __name__ == "__main__" :
 
-    node = Node()		# 첫 번째 노드
-    node.data = dataArray[0]
-    head = node
-    memory.append(node)
+	stoneAry = ["주황", "초록", "파랑", "보라", "빨강", "노랑"]
 
-    for data in dataArray[1:] :	# 두 번째 이후 노드
-        pre = node
-        node = Node()
-        node.data = data
-        pre.nlink = node
-        node.plink = pre
-        memory.append(node)
+	print("과자집에 가는길 : ", end = ' ')
+	for stone in stoneAry :
+		push(stone)
+		print(stone, "-->", end = ' ')
+	print("과자집")
 
-    printNodes(head)
+	print("우리집에 오는길 : ", end = ' ')
+	while True :
+		stone = pop()
+		if stone == None :
+			break
+		print(stone, "-->", end = ' ')
+	print("우리집")
