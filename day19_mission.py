@@ -1,15 +1,29 @@
-def score_sort(ary):
+def sort(ary) :
     n = len(ary)
-    for end in range(1, n):
-        for i in range(end, 0, -1):
-            if ary[i-1][1] > ary[i][1] :
-                ary[i-1], ary[i] = ary[i], ary[i-1]
+    for i in range(0, n-1) :
+        minidx = i
+        for j in range(i+1, n) :
+            if (ary[minidx] > ary[j]) :
+                minidx = j
+        tmp = ary[i]
+        ary[i] = ary[minidx]
+        ary[minidx] = tmp
+
     return ary
 
-ex_array = [['선미', 88], ['초아', 99], ['화사', 71], ['영탁', 78], ['영웅', 67], ['민호', 92]]
+## 전역 변수 선언 부분 ##
+ary2 = [[55, 33, 250, 44],
+         [88,  1,  67, 23],
+         [199,222, 38, 47],
+         [155,145, 20, 99]]
+ary1 = []
 
 if __name__ == "__main__":
-    print(f'정렬 전 --> {ex_array}')
-    print(f'정렬 후 --> {score_sort(ex_array)}')
+    for i in range(len(ary2)) :
+        for j in range(len(ary2[i])) :
+            ary1.append(ary2[i][j])
 
-
+    print('1차원 변경 후, 정렬 전 -->', ary1)
+    ary1 = sort(ary1)
+    print('1차원 변경 후, 정렬 후 -->', ary1)
+    print('중앙값 --> ', ary1[len(ary1)//2])
