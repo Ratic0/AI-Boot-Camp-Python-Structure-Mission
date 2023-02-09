@@ -1,29 +1,24 @@
-def transfer(c, n):
-    """
-    n을 입력받아서 c진수로 바꾸는 함수
-    :param c: 10진법에서 바꿀 진수
-    :param n: 바꿀 숫자
-    :return: c진법으로 바꾼 수
-    """
+from tkinter import *
 
-    if c > n : # 나머지가 나올때
-        print(number_char[n],end='')
-    else:
-        transfer(c, n//c)
-        print(number_char[n%c],end='')
-#전역변수 설정
-number_char = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F']
+## 함수 선언 부분 ##
+def draw_triangle(x, y, size) :
+    if size >= 30 :
+        draw_triangle(x, y, size/2)
+        draw_triangle(x+size/2, y, size / 2)
+        draw_triangle(x + size / 4, int(y-size*(3**0.5)/4), size / 2)
+    else :
+        canvas.create_polygon (x, y, x + size, y, x + size / 2, y - size*(3 ** 0.5) / 2, fill = 'red', outline = "red")
 
-if __name__ == "__main__" :
+## 전역 변수 선언 부분 ##
+w_size = 1000
+radius = 400
 
-    en_num = int(input('10진수 입력 -->'))
+## 메인 코드 부분 ##
+window = Tk()
+window.title("삼각형 모양의 프랙탈")
+canvas = Canvas(window, height = w_size, width = w_size, bg = 'white')
 
-    print(f'2진수 : ',end='')
-    transfer(2, en_num)
-    print()
-    print(f'8진수 : ',end='')
-    transfer(8, en_num)
-    print()
-    print(f'16진수 : ',end='')
-    transfer(16, en_num)
-    print()
+draw_triangle(w_size/5, w_size/5*4, w_size*2/3)
+
+canvas.pack()
+window.mainloop()
